@@ -1,0 +1,10 @@
+[package]
+name = "vmt-parser"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+logos = "0.13.0"
+thiserror = "1.0.50"
+miette = "5.10.0"
+parse-display = "0.8.2"
