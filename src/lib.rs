@@ -1,6 +1,6 @@
 mod error;
-pub mod vdf;
+pub mod material;
 
-pub use error::Error;
+pub use error::VmtError;
 
-pub type Result<T, E = Error> = std::result::Result<T, E>;
+pub type Result<T, E = VmtError> = std::result::Result<T, E>;
