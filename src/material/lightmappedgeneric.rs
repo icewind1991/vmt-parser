@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct LightMappedGenericMaterial {
-    /// Defines an diffuse texture.
+    /// Defines an albedo texture.
     #[serde(rename = "$basetexture")]
     pub base_texture: String,
     /// Use this material as a decal.
@@ -85,4 +85,8 @@ pub struct LightMappedGenericMaterial {
     /// Prevents fog from overdrawing a material.
     #[serde(rename = "$nofog", default)]
     pub no_fog: bool,
+
+    /// Ignore z filtering
+    #[serde(rename = "$ignorez", default)]
+    pub ignore_z: bool,
 }

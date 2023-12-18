@@ -28,4 +28,5 @@ lightmappedgeneric(LightMappedGenericMaterial(
   r#$envmap: None,
   r#$phong: false,
   r#$nofog: false,
+  r#$ignorez: false,
 ))
