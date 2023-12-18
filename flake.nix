@@ -40,7 +40,7 @@
 
       src = sourceByRegex ./. ["Cargo.*" "(src|derive|benches|tests|examples|koth_bagel.*)(/.*)?"];
       nearskOpt = {
-        pname = "vbsp";
+        pname = "vmt-parser";
         root = src;
       };
     in rec {

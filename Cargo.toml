@@ -2,11 +2,13 @@
 name = "vmt-parser"
 version = "0.1.0"
 edition = "2021"
+rust-version = "1.65.0"
 
 [dependencies]
 thiserror = "1.0.50"
 miette = "5.10.0"
-vdf-reader = { version = "0.1", path = "../vdf-reader" }
+#vdf-reader = { version = "0.1", path = "../vdf-reader" }
+vdf-reader = { version = "0.1", git = "https://github.com/icewind1991/vdf-reader" }
 serde = { version = "1.0.193", features = ["derive"] }
 serde_repr = "0.1.17"
 
