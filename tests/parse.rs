@@ -6,6 +6,7 @@ use vmt_parser::from_str;
 #[test_case("tests/data/concretefloor003.vmt")]
 #[test_case("tests/data/mvm_backpack.vmt")]
 #[test_case("tests/data/water_murky.vmt")]
+#[test_case("tests/data/blendrocktograss002.vmt")]
 fn test_serde(path: &str) {
     let raw = read_to_string(path).unwrap();
     match from_str(&raw) {
