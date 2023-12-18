@@ -72,6 +72,7 @@
           cargo-audit
           cargo-msrv
           cargo-semver-checks
+          cargo-insta
           (writeShellApplication {
             name = "cargo-fuzz";
             runtimeInputs = [cargo-fuzz toolchain];

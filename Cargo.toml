@@ -4,11 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-logos = "0.13.0"
 thiserror = "1.0.50"
 miette = "5.10.0"
-parse-display = "0.8.2"
 vdf-reader = { version = "0.1", path = "../vdf-reader" }
+serde = { version = "1.0.193", features = ["derive"] }
+serde_repr = "0.1.17"
 
 [dev-dependencies]
 test-case = "3.3.1"
