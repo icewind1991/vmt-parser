@@ -5,6 +5,7 @@ mod worldvertextransition;
 
 pub use lightmappedgeneric::LightMappedGenericMaterial;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 pub use unlitgeneric::UnlitGenericMaterial;
 pub use water::WaterMaterial;
 pub use worldvertextransition::WorldVertexTransitionMaterial;
@@ -19,4 +20,12 @@ pub enum Material {
     Water(WaterMaterial),
     #[serde(rename = "worldvertextransition")]
     WorldVertexTransition(WorldVertexTransitionMaterial),
+    #[serde(rename = "patch")]
+    Patch(PatchMaterial),
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PatchMaterial {
+    include: String,
+    replace: HashMap<String, String>,
 }

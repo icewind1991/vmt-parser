@@ -1,0 +1,10 @@
+---
+source: tests/parse.rs
+expression: result
+---
+patch(PatchMaterial(
+  include: "materials/glass/glasswindow001a.vmt",
+  replace: {
+    "$envmap": "maps/koth_bagel_rc2a/c1920_704_41",
+  },
+))
