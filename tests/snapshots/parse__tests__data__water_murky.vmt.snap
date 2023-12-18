@@ -1,0 +1,21 @@
+---
+source: tests/parse.rs
+expression: result
+---
+water(WaterMaterial(
+  r#$basetexture: "swamp/water/water_murky",
+  r#$abovewater: true,
+  r#$bottommaterial: Some("swamp/water/water_murky_beneath.vmt"),
+  r#$underwaterover: None,
+  r#$bumpmap: None,
+  r#$normalmap: Some("water/tfwater001_normal"),
+  r#$dudvframe: 0,
+  r#$bumpframe: 0,
+  r#$bumptransform: "center 0.5 0.5 scale 1 1 rotate 0 translate 0 0",
+  r#$flashlighttint: 1.0,
+  r#$fogenable: true,
+  r#$fogenable: Vec3((1.0, 1.0, 1.0)),
+  r#$fogstart: 0.0,
+  r#$fogend: 170.0,
+  r#$lightmapwaterfog: false,
+))
