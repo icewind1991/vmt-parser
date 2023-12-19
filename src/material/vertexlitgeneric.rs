@@ -4,35 +4,26 @@ use crate::{
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct WorldVertexTransitionMaterial {
-    /// The first texture in the blend.
+pub struct VertexLitGenericMaterial {
+    /// Defines an albedo texture.
     #[serde(rename = "$basetexture")]
     pub base_texture: String,
-    /// The second texture to blend to.
-    #[serde(rename = "$basetexture2")]
-    pub base_texture2: String,
-    /// Modulate the blending between materials using a special texture.
-    #[serde(rename = "$blendmodulatetexture")]
-    pub blend_modulate_texture: Option<String>,
-    /// Use this material as a decal.
-    #[serde(rename = "$decal", default)]
-    pub decal: bool,
     /// Detail texturing.
     #[serde(rename = "$detail")]
     pub detail: Option<String>,
-    /// Links the surface to a set of physical properties.
-    #[serde(rename = "$surfaceprop")]
-    pub surface_prop: Option<String>,
+    /// Use a 2nd UV channel for high-resolution decal support.
+    #[serde(rename = "$decaltexture")]
+    pub decal_texture: Option<String>,
 
+    /// Color tinting
+    #[serde(rename = "$color2", default = "default_scale3")]
+    pub color2: Vec3,
     /// Transforms the texture before use in the material. This does not affect lightmaps on the surface.
     #[serde(rename = "$basetexturetransform", default)]
     pub base_texture_transform: TextureTransform,
     /// Independently scales the red, green and blue channels of an albedo.
     #[serde(rename = "$color", default = "default_scale3")]
     pub color: Vec3,
-    /// the number of units that each texel covers
-    #[serde(rename = "$decalscale", default = "default_scale")]
-    pub decal_scale: f32,
     #[serde(rename = "$decalscale", default = "default_detail_scale")]
     /// Fits the detail texture onto the material the given number of times
     pub detail_scale: Vec2,
@@ -71,12 +62,9 @@ pub struct WorldVertexTransitionMaterial {
     #[serde(rename = "$translucent", default)]
     pub translucent: bool,
 
-    /// bumpmap for the first texture.
+    /// Specifies a texture that will provide three-dimensional lighting information for a material.
     #[serde(rename = "$bumpmap")]
     pub bump_map: Option<String>,
-    /// bumpmap for the second texture.
-    #[serde(rename = "$bumpmap2")]
-    pub bump_map2: Option<String>,
     /// Per-texel color modification via a warp texture.
     #[serde(rename = "$lightwarptexture")]
     pub light_wrap_texture: Option<String>,

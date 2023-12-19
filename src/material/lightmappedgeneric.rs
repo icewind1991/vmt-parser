@@ -52,6 +52,9 @@ pub struct LightMappedGenericMaterial {
     /// Specifies a mask to use to determine binary opacity.
     #[serde(rename = "$alphatest", default)]
     pub alpha_test: bool,
+    /// Specifies a mask to use to determine binary opacity.
+    #[serde(rename = "$alphatestreference", default = "default_scale")]
+    pub alpha_test_reference: f32,
     /// Vector-like edge filtering.
     #[serde(rename = "$distancealpha", default)]
     pub distance_alpha: bool,

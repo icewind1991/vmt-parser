@@ -23,12 +23,19 @@ pub struct UnlitGenericMaterial {
     /// Specifies a mask to use to determine binary opacity.
     #[serde(rename = "$alphatest", default)]
     pub alpha_test: bool,
+    /// Specifies a mask to use to determine binary opacity.
+    #[serde(rename = "$alphatestreference", default = "default_scale")]
+    pub alpha_test_reference: f32,
     /// Disables backface culling.
     #[serde(rename = "$nocull", default)]
     pub no_cull: bool,
     /// Specifies that the material should be partially see-through.
     #[serde(rename = "$translucent", default)]
     pub translucent: bool,
+
+    /// Specifies a texture that will provide three-dimensional lighting information for a material.
+    #[serde(rename = "$bumpmap")]
+    pub bump_map: Option<String>,
 
     /// Ignore z filtering
     #[serde(rename = "$ignorez", default)]

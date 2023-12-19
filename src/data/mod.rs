@@ -6,7 +6,7 @@ pub use texture_transform::TextureTransform;
 
 #[derive(Debug, Serialize, Deserialize, Copy, Clone)]
 #[serde(from = "Vec2OrSingle<f32>")]
-pub struct Vec2([f32; 2]);
+pub struct Vec2(pub [f32; 2]);
 
 impl From<Vec2OrSingle<f32>> for Vec2 {
     fn from(value: Vec2OrSingle<f32>) -> Self {
@@ -19,7 +19,7 @@ impl From<Vec2OrSingle<f32>> for Vec2 {
 
 #[derive(Debug, Serialize, Deserialize, Copy, Clone)]
 #[serde(from = "Vec3OrSingle<f32>")]
-pub struct Vec3([f32; 3]);
+pub struct Vec3(pub [f32; 3]);
 
 impl From<Vec3OrSingle<f32>> for Vec3 {
     fn from(value: Vec3OrSingle<f32>) -> Self {
