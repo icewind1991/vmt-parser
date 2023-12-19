@@ -30,7 +30,7 @@ worldvertextransition(WorldVertexTransitionMaterial(
   r#$selfillum: false,
   r#$ssbump: true,
   r#$envmap: None,
-  r#$phong: false,
+  r#$phong: 0.0,
   r#$nofog: false,
   r#$ignorez: false,
 ))

@@ -93,7 +93,7 @@ pub struct VertexLitGenericMaterial {
     pub env_map: Option<String>,
     /// Diffuse reflections.
     #[serde(rename = "$phong", default)]
-    pub phong: bool,
+    pub phong: f32,
 
     /// Prevents fog from overdrawing a material.
     #[serde(rename = "$nofog", default)]

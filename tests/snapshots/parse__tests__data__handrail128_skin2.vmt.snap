@@ -26,7 +26,7 @@ vertexlitgeneric(VertexLitGenericMaterial(
   r#$selfillum: false,
   r#$ssbump: false,
   r#$envmap: None,
-  r#$phong: false,
+  r#$phong: 0.0,
   r#$nofog: false,
   r#$ignorez: false,
 ))
