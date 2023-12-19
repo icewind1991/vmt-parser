@@ -18,6 +18,7 @@ enum LoaderError {
 #[test_case("tests/data/water_murky.vmt")]
 #[test_case("tests/data/blendrocktograss002.vmt")]
 #[test_case("tests/data/patch.vmt")]
+#[test_case("tests/data/handrail128_skin2.vmt")]
 fn test_serde(path: &str) {
     let raw = read_to_string(path).unwrap();
     match from_str(&raw) {
