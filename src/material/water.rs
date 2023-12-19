@@ -1,25 +1,34 @@
+use super::deserialize_path;
 use crate::{default_scale, default_scale3, TextureTransform, Vec3};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WaterMaterial {
     /// Usually referred to as a "sludge-layer", acts as a layer on top of the surface of the $AboveWater Material.
-    #[serde(rename = "$basetexture")]
+    #[serde(rename = "$basetexture", deserialize_with = "deserialize_path")]
     pub base_texture: String,
     /// Tells this material is used for models and not brushes.
     #[serde(rename = "$abovewater", default)]
     pub above_water: bool,
     /// Required parameter. This is the material (not texture) to use when underneath the water’s surface. The bottom material must have $reflecttexture, $abovewater and $envmap disabled, but can otherwise do whatever it wants.
-    #[serde(rename = "$bottommaterial")]
+    #[serde(
+        rename = "$bottommaterial",
+        default,
+        deserialize_with = "deserialize_path"
+    )]
     pub bottom_material: Option<String>,
     /// Applies a refracting screen overlay when the camera is underwater. Generally used with effects\water_warp01. Requires $abovewater to be 0.
-    #[serde(rename = "$underwaterover")]
+    #[serde(
+        rename = "$underwaterover",
+        default,
+        deserialize_with = "deserialize_path"
+    )]
     pub underwater_overlay: Option<String>,
     /// Specifies a texture that will provide three-dimensional lighting information for a material for DX8.
-    #[serde(rename = "$bumpmap")]
+    #[serde(rename = "$bumpmap", default, deserialize_with = "deserialize_path")]
     pub bump_map: Option<String>,
     /// A Du/dv map for DirectX 8 rendering ($bumpmap), and a bump map for DirectX 9 and above ($normalmap).
-    #[serde(rename = "$normalmap")]
+    #[serde(rename = "$normalmap", default, deserialize_with = "deserialize_path")]
     pub normal_map: Option<String>,
     #[serde(rename = "$dudvframe", default)]
     pub du_dv_frame: u32,

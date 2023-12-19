@@ -1,13 +1,14 @@
+use super::deserialize_path;
 use crate::{default_scale, Vec3};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct EyeRefractMaterial {
     /// Usually referred to as a "sludge-layer", acts as a layer on top of the surface of the $AboveWater Material.
-    #[serde(rename = "$iris")]
+    #[serde(rename = "$iris", deserialize_with = "deserialize_path")]
     pub iris: String,
     /// A texture to specify the shape of the cornea, similar to a normal map. Influences lighting and dilation. The red and green channels are used for the normal mapping, the blue channel is a mask for parallax mapping (straight multiply), and the alpha channel seems to be a multiplier for lighting. Because the $iris is warped in various ways the normals will not match 1-to-1 with the base texture.
-    #[serde(rename = "$corneatexture")]
+    #[serde(rename = "$corneatexture", deserialize_with = "deserialize_path")]
     pub cornea_texture: String,
     /// Strength of the $corneatexture.
     #[serde(rename = "$corneabumpstrength", default = "default_scale")]
@@ -20,17 +21,17 @@ pub struct EyeRefractMaterial {
     pub dilation: f32,
 
     /// 1-dimensional texture which remaps lighting colors.
-    #[serde(rename = "$lightwarptexture")]
+    #[serde(rename = "$lightwarptexture", deserialize_with = "deserialize_path")]
     pub light_warp_texture: String,
     /// Enables cubemap reflections. This shader has a specific cubemap made for it, engine/eye-reflection-cubemap-.vtf, but others can be used, including env_cubemap.
-    #[serde(rename = "$envmap")]
+    #[serde(rename = "$envmap", deserialize_with = "deserialize_path")]
     pub env_map: String,
     /// The opacity of the cubemap reflection. Does not affect the eye glint. Default 0.5.
     #[serde(rename = "$glossiness", default = "default_dilation")]
     pub glossiness: f32,
 
     /// An ambient occlusion texture overlaid onto the entire eye
-    #[serde(rename = "$ambientoccltexture")]
+    #[serde(rename = "$ambientoccltexture", deserialize_with = "deserialize_path")]
     pub ambient_occlusion_texture: String,
     /// Tints the $ambientoccltexture
     #[serde(rename = "$ambientocclcolor", default = "default_occl_color")]

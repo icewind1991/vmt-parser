@@ -1,3 +1,4 @@
+use super::deserialize_path;
 use crate::{
     default_detail_scale, default_scale, default_scale3, BlendMode, TextureTransform, Vec2, Vec3,
 };
@@ -6,22 +7,25 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WorldVertexTransitionMaterial {
     /// The first texture in the blend.
-    #[serde(rename = "$basetexture")]
+    #[serde(rename = "$basetexture", deserialize_with = "deserialize_path")]
     pub base_texture: String,
     /// The second texture to blend to.
-    #[serde(rename = "$basetexture2")]
+    #[serde(rename = "$basetexture2", deserialize_with = "deserialize_path")]
     pub base_texture2: String,
     /// Modulate the blending between materials using a special texture.
-    #[serde(rename = "$blendmodulatetexture")]
+    #[serde(
+        rename = "$blendmodulatetexture",
+        deserialize_with = "deserialize_path"
+    )]
     pub blend_modulate_texture: Option<String>,
     /// Use this material as a decal.
     #[serde(rename = "$decal", default)]
     pub decal: bool,
     /// Detail texturing.
-    #[serde(rename = "$detail")]
+    #[serde(rename = "$detail", default)]
     pub detail: Option<String>,
     /// Links the surface to a set of physical properties.
-    #[serde(rename = "$surfaceprop")]
+    #[serde(rename = "$surfaceprop", default)]
     pub surface_prop: Option<String>,
 
     /// Transforms the texture before use in the material. This does not affect lightmaps on the surface.
@@ -43,7 +47,11 @@ pub struct WorldVertexTransitionMaterial {
     #[serde(rename = "$detailblendmode", default)]
     pub detail_blend_mode: BlendMode,
     /// A separate VertexLitGeneric material to that will replace this one if the decal hits a model.
-    #[serde(rename = "$modelmaterial", default)]
+    #[serde(
+        rename = "$modelmaterial",
+        default,
+        deserialize_with = "deserialize_path"
+    )]
     pub model_material: Option<String>,
     /// Disables texture filtering.
     #[serde(rename = "$pointsamplemagfilter", default)]
@@ -72,13 +80,17 @@ pub struct WorldVertexTransitionMaterial {
     pub translucent: bool,
 
     /// bumpmap for the first texture.
-    #[serde(rename = "$bumpmap")]
+    #[serde(rename = "$bumpmap", default, deserialize_with = "deserialize_path")]
     pub bump_map: Option<String>,
     /// bumpmap for the second texture.
-    #[serde(rename = "$bumpmap2")]
+    #[serde(rename = "$bumpmap2", default, deserialize_with = "deserialize_path")]
     pub bump_map2: Option<String>,
     /// Per-texel color modification via a warp texture.
-    #[serde(rename = "$lightwarptexture")]
+    #[serde(
+        rename = "$lightwarptexture",
+        default,
+        deserialize_with = "deserialize_path"
+    )]
     pub light_wrap_texture: Option<String>,
     /// Determines whether the surface is self-illuminated independent of environment lighting.
     #[serde(rename = "$selfillum", default)]
@@ -88,7 +100,7 @@ pub struct WorldVertexTransitionMaterial {
     pub ss_bump: bool,
 
     /// Specular reflections.
-    #[serde(rename = "$envmap")]
+    #[serde(rename = "$envmap", default, deserialize_with = "deserialize_path")]
     pub env_map: Option<String>,
     /// Diffuse reflections.
     #[serde(rename = "$phong", default)]

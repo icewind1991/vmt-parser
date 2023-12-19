@@ -3,14 +3,16 @@ source: tests/parse.rs
 expression: result
 ---
 unlitgeneric(UnlitGenericMaterial(
-  r#$basetexture: "vgui\\pve\\mvm_backpack",
+  r#$basetexture: "vgui/pve/mvm_backpack",
   r#$surfaceprop: None,
   r#$model: false,
   r#$color: Vec3((1.0, 1.0, 1.0)),
   r#$alpha: 1.0,
   r#$alphatest: false,
+  r#$alphatestreference: 1.0,
   r#$nocull: false,
   r#$translucent: true,
+  r#$bumpmap: None,
   r#$ignorez: true,
   r#$nofog: false,
   r#$receiveflashlight: false,

@@ -7,7 +7,7 @@ mod worldvertextransition;
 
 pub use eyerefract::EyeRefractMaterial;
 pub use lightmappedgeneric::LightMappedGenericMaterial;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize};
 pub use unlitgeneric::UnlitGenericMaterial;
 use vdf_reader::entry::{Entry, Table};
 use vdf_reader::error::UnknownError;
@@ -156,4 +156,27 @@ impl PatchMaterial {
 
         Ok(from_entry(Entry::Table(material))?)
     }
+}
+
+trait PathLike {
+    fn normalize(self) -> Self;
+}
+
+impl PathLike for String {
+    fn normalize(self) -> Self {
+        self.replace('\\', "/")
+    }
+}
+
+impl<T: PathLike> PathLike for Option<T> {
+    fn normalize(self) -> Self {
+        self.map(T::normalize)
+    }
+}
+
+/// Deserialize string and convert windows \ path separators to /
+fn deserialize_path<'de, T: PathLike + Deserialize<'de>, D: Deserializer<'de>>(
+    deserializer: D,
+) -> Result<T, D::Error> {
+    Ok(T::deserialize(deserializer)?.normalize())
 }

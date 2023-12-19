@@ -20,6 +20,7 @@ worldvertextransition(WorldVertexTransitionMaterial(
   r#$seamless_scale: 1.0,
   r#$alpha: 1.0,
   r#$alphatest: false,
+  r#$alphatestreference: 1.0,
   r#$distancealpha: false,
   r#$nocull: false,
   r#$translucent: false,

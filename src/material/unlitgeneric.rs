@@ -1,13 +1,14 @@
+use super::deserialize_path;
 use crate::{default_scale, default_scale3, Vec3};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UnlitGenericMaterial {
     /// Defines an albedo texture.
-    #[serde(rename = "$basetexture")]
+    #[serde(rename = "$basetexture", deserialize_with = "deserialize_path")]
     pub base_texture: String,
     /// Links the surface to a set of physical properties.
-    #[serde(rename = "$surfaceprop")]
+    #[serde(rename = "$surfaceprop", default)]
     pub surface_prop: Option<String>,
     /// Tells this material is used for models and not brushes.
     #[serde(rename = "$model", default)]
@@ -34,7 +35,7 @@ pub struct UnlitGenericMaterial {
     pub translucent: bool,
 
     /// Specifies a texture that will provide three-dimensional lighting information for a material.
-    #[serde(rename = "$bumpmap")]
+    #[serde(rename = "$bumpmap", default, deserialize_with = "deserialize_path")]
     pub bump_map: Option<String>,
 
     /// Ignore z filtering
