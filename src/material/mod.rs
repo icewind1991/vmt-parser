@@ -88,7 +88,7 @@ impl Material {
             Material::VertexLitGeneric(mat) => &mat.base_texture,
             Material::UnlitGeneric(mat) => &mat.base_texture,
             Material::WorldVertexTransition(mat) => &mat.base_texture,
-            Material::Water(mat) => &mat.base_texture,
+            Material::Water(mat) => mat.base_texture.as_deref().unwrap_or_default(),
             Material::EyeRefract(mat) => &mat.iris,
             _ => "",
         }

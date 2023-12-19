@@ -5,8 +5,12 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WaterMaterial {
     /// Usually referred to as a "sludge-layer", acts as a layer on top of the surface of the $AboveWater Material.
-    #[serde(rename = "$basetexture", deserialize_with = "deserialize_path")]
-    pub base_texture: String,
+    #[serde(
+        rename = "$basetexture",
+        default,
+        deserialize_with = "deserialize_path"
+    )]
+    pub base_texture: Option<String>,
     /// Tells this material is used for models and not brushes.
     #[serde(rename = "$abovewater", default)]
     pub above_water: bool,

@@ -3,7 +3,7 @@ source: tests/parse.rs
 expression: result
 ---
 water(WaterMaterial(
-  r#$basetexture: "swamp/water/water_murky",
+  r#$basetexture: Some("swamp/water/water_murky"),
   r#$abovewater: true,
   r#$bottommaterial: Some("swamp/water/water_murky_beneath.vmt"),
   r#$underwaterover: None,
