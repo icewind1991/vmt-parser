@@ -1,0 +1,32 @@
+---
+source: tests/parse.rs
+expression: patched
+---
+lightmappedgeneric(LightMappedGenericMaterial(
+  r#$basetexture: "cp_mountainlab/concrete/concretefloor003",
+  r#$decal: false,
+  r#$detail: Some("overlays/detail001"),
+  r#$surfaceprop: None,
+  r#$basetexturetransform: "center 0.5 0.5 scale 1 1 rotate 0 translate 0 0",
+  r#$color: Vec3((1.0, 1.0, 1.0)),
+  r#$decalscale: 1.0,
+  r#$decalscale: Vec2((4.0, 4.0)),
+  r#$detailblendfactor: 1.0,
+  r#$detailblendmode: 0,
+  r#$modelmaterial: None,
+  r#$pointsamplemagfilter: false,
+  r#$seamless_scale: 1.0,
+  r#$alpha: 1.0,
+  r#$alphatest: false,
+  r#$distancealpha: false,
+  r#$nocull: false,
+  r#$translucent: false,
+  r#$bumpmap: Some("concrete/concretefloor007b_height-ssbump"),
+  r#$lightwarptexture: None,
+  r#$selfillum: false,
+  r#$ssbump: false,
+  r#$envmap: None,
+  r#$phong: false,
+  r#$nofog: false,
+  r#$ignorez: false,
+))

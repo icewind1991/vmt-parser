@@ -1,8 +1,8 @@
 "patch"
 {
-	"include"		"materials/glass/glasswindow001a.vmt"
+	"include"		"tests/data/concretefloor003.vmt"
 	"replace"
 	{
-		"$envmap"		"maps/koth_bagel_rc2a/c1920_704_41"
+		"$ssbump" "0"
 	}
 }
