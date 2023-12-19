@@ -149,6 +149,7 @@ impl Material {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PatchMaterial {
+    #[serde(deserialize_with = "deserialize_path")]
     include: String,
     #[serde(default)]
     replace: Table,
