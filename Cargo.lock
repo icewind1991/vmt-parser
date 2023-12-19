@@ -606,7 +606,7 @@ checksum = "e51733f11c9c4f72aa0c160008246859e340b00807569a0da0e7a1079b27ba85"
 [[package]]
 name = "vdf-reader"
 version = "0.1.0"
-source = "git+https://github.com/icewind1991/vdf-reader#31977b9340e915944eeb27c96f3199f7c5560376"
+source = "git+https://github.com/icewind1991/vdf-reader#21e97bae76b61369f90a2262e46839ea258700be"
 dependencies = [
  "logos",
  "miette",

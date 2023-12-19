@@ -128,6 +128,7 @@ impl Material {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PatchMaterial {
     include: String,
+    #[serde(default)]
     replace: Table,
 }
 
