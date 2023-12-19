@@ -15,6 +15,7 @@ pub struct WorldVertexTransitionMaterial {
     /// Modulate the blending between materials using a special texture.
     #[serde(
         rename = "$blendmodulatetexture",
+        default,
         deserialize_with = "deserialize_path"
     )]
     pub blend_modulate_texture: Option<String>,

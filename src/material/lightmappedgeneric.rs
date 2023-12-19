@@ -71,7 +71,7 @@ pub struct LightMappedGenericMaterial {
     pub translucent: bool,
 
     /// Specifies a texture that will provide three-dimensional lighting information for a material.
-    #[serde(rename = "$bumpmap", deserialize_with = "deserialize_path")]
+    #[serde(rename = "$bumpmap", default, deserialize_with = "deserialize_path")]
     pub bump_map: Option<String>,
     /// Per-texel color modification via a warp texture.
     #[serde(
