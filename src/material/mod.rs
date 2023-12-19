@@ -1,6 +1,7 @@
 mod eyerefract;
 mod lightmappedgeneric;
 mod unlitgeneric;
+mod unlittwotexture;
 mod vertexlitgeneric;
 mod water;
 mod worldvertextransition;
@@ -9,6 +10,7 @@ pub use eyerefract::EyeRefractMaterial;
 pub use lightmappedgeneric::LightMappedGenericMaterial;
 use serde::{Deserialize, Deserializer, Serialize};
 pub use unlitgeneric::UnlitGenericMaterial;
+pub use unlittwotexture::UnlitTwoTextureMaterial;
 use vdf_reader::entry::{Entry, Table};
 use vdf_reader::error::UnknownError;
 use vdf_reader::{from_entry, VdfError};
@@ -24,6 +26,8 @@ pub enum Material {
     VertexLitGeneric(VertexLitGenericMaterial),
     #[serde(rename = "unlitgeneric")]
     UnlitGeneric(UnlitGenericMaterial),
+    #[serde(rename = "unlittwotexture")]
+    UnlitTwoTexture(UnlitTwoTextureMaterial),
     #[serde(rename = "water")]
     Water(WaterMaterial),
     #[serde(rename = "worldvertextransition")]
@@ -52,6 +56,7 @@ impl Material {
             Material::LightMappedGeneric(mat) => mat.translucent,
             Material::VertexLitGeneric(mat) => mat.translucent,
             Material::UnlitGeneric(mat) => mat.translucent,
+            Material::UnlitTwoTexture(mat) => mat.translucent,
             Material::WorldVertexTransition(mat) => mat.translucent,
             Material::Water(_) => true,
             _ => false,
@@ -63,6 +68,7 @@ impl Material {
             Material::LightMappedGeneric(mat) => mat.no_cull,
             Material::VertexLitGeneric(mat) => mat.no_cull,
             Material::UnlitGeneric(mat) => mat.no_cull,
+            Material::UnlitTwoTexture(mat) => mat.no_cull,
             Material::WorldVertexTransition(mat) => mat.no_cull,
             Material::Water(_) => true,
             _ => false,
@@ -74,6 +80,7 @@ impl Material {
             Material::LightMappedGeneric(mat) => mat.alpha_test.then_some(mat.alpha_test_reference),
             Material::VertexLitGeneric(mat) => mat.alpha_test.then_some(mat.alpha_test_reference),
             Material::UnlitGeneric(mat) => mat.alpha_test.then_some(mat.alpha_test_reference),
+            Material::UnlitTwoTexture(mat) => mat.alpha_test.then_some(mat.alpha_test_reference),
             Material::WorldVertexTransition(mat) => {
                 mat.alpha_test.then_some(mat.alpha_test_reference)
             }
@@ -87,6 +94,7 @@ impl Material {
             Material::LightMappedGeneric(mat) => &mat.base_texture,
             Material::VertexLitGeneric(mat) => &mat.base_texture,
             Material::UnlitGeneric(mat) => &mat.base_texture,
+            Material::UnlitTwoTexture(mat) => &mat.base_texture,
             Material::WorldVertexTransition(mat) => &mat.base_texture,
             Material::Water(mat) => mat.base_texture.as_deref().unwrap_or_default(),
             Material::EyeRefract(mat) => &mat.iris,
@@ -99,6 +107,7 @@ impl Material {
             Material::LightMappedGeneric(mat) => mat.bump_map.as_deref(),
             Material::VertexLitGeneric(mat) => mat.bump_map.as_deref(),
             Material::UnlitGeneric(mat) => mat.bump_map.as_deref(),
+            Material::UnlitTwoTexture(mat) => mat.bump_map.as_deref(),
             Material::WorldVertexTransition(mat) => mat.bump_map.as_deref(),
             Material::Water(mat) => mat.bump_map.as_deref(),
             _ => None,
@@ -109,6 +118,7 @@ impl Material {
         match self {
             Material::LightMappedGeneric(mat) => mat.surface_prop.as_deref(),
             Material::UnlitGeneric(mat) => mat.surface_prop.as_deref(),
+            Material::UnlitTwoTexture(mat) => mat.surface_prop.as_deref(),
             Material::WorldVertexTransition(mat) => mat.surface_prop.as_deref(),
             _ => None,
         }
@@ -119,8 +129,20 @@ impl Material {
             Material::LightMappedGeneric(mat) => mat.alpha,
             Material::VertexLitGeneric(mat) => mat.alpha,
             Material::UnlitGeneric(mat) => mat.alpha,
+            Material::UnlitTwoTexture(mat) => mat.alpha,
             Material::WorldVertexTransition(mat) => mat.alpha,
             _ => 1.0,
+        }
+    }
+
+    pub fn ignore_z_test(&self) -> bool {
+        match self {
+            Material::LightMappedGeneric(mat) => mat.ignore_z,
+            Material::VertexLitGeneric(mat) => mat.ignore_z,
+            Material::UnlitGeneric(mat) => mat.ignore_z,
+            Material::UnlitTwoTexture(mat) => mat.ignore_z,
+            Material::WorldVertexTransition(mat) => mat.ignore_z,
+            _ => false,
         }
     }
 }
