@@ -5,34 +5,46 @@ use crate::{
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct VertexLitGenericMaterial {
-    /// Defines an albedo texture.
+pub struct RefractMaterial {
+    /// The pattern of refraction is defined by a normal map (DX9+) or DUDV map (DX8-). May be animated.
+    #[serde(rename = "$normalmap", deserialize_with = "deserialize_path")]
+    pub normal_map: String,
+    /// The pattern of refraction is defined by a normal map (DX9+) or DUDV map (DX8-). May be animated.
+    #[serde(rename = "$dudvmap", default, deserialize_with = "deserialize_path")]
+    pub du_dv_map: Option<String>,
+    /// If a second normal map is specified, it will be blended with the first one.
+    #[serde(rename = "$normalmap2", default, deserialize_with = "deserialize_path")]
+    pub normal_map2: Option<String>,
+    /// Use a texture instead of rendering the view for the source of the distorted pixels.
     #[serde(
         rename = "$basetexture",
         default,
         deserialize_with = "deserialize_path"
     )]
     pub base_texture: Option<String>,
-    /// Detail texturing.
-    #[serde(rename = "$detail", default, deserialize_with = "deserialize_path")]
-    pub detail: Option<String>,
-    /// Use a 2nd UV channel for high-resolution decal support.
+    /// Transforms the bump map texture.
+    #[serde(rename = "$bumptransform", default)]
+    pub bump_transform: TextureTransform,
+    /// Transforms the bump map texture.
+    #[serde(rename = "$bumptransform2", default)]
+    pub bump_transform2: TextureTransform,
+
+    #[serde(rename = "$refracttint", default = "default_scale3")]
+    pub refract_tint: Vec3,
+    /// Tints the colour of the refraction either uniformly or per-texel. Can be used in conjunction with $refracttint
     #[serde(
-        rename = "$decaltexture",
+        rename = "$refracttinttexture",
         default,
         deserialize_with = "deserialize_path"
     )]
-    pub decal_texture: Option<String>,
+    pub refract_tint_texture: Option<String>,
+    /// Controls the strength of the refraction by multiplying the normal map intensity.
+    #[serde(rename = "$refractamount", default = "default_scale")]
+    pub refract_amount: f32,
+    /// Adds a blur effect. Valid values are 0, 1 and 2 (0 and 1 for DX8-).
+    #[serde(rename = "$bluramount", default)]
+    pub blur_amount: f32,
 
-    /// Color tinting
-    #[serde(rename = "$color2", default = "default_scale3")]
-    pub color2: Vec3,
-    /// Transforms the texture before use in the material. This does not affect lightmaps on the surface.
-    #[serde(rename = "$basetexturetransform", default)]
-    pub base_texture_transform: TextureTransform,
-    /// Independently scales the red, green and blue channels of an albedo.
-    #[serde(rename = "$color", default = "default_scale3")]
-    pub color: Vec3,
     #[serde(rename = "$decalscale", default = "default_detail_scale")]
     /// Fits the detail texture onto the material the given number of times
     pub detail_scale: Vec2,
@@ -95,15 +107,6 @@ pub struct VertexLitGenericMaterial {
     /// Specular reflections.
     #[serde(rename = "$envmap", default, deserialize_with = "deserialize_path")]
     pub env_map: Option<String>,
-    /// Diffuse reflections.
-    #[serde(rename = "$phong", default)]
-    pub phong: f32,
-
-    /// Prevents fog from overdrawing a material.
-    #[serde(rename = "$nofog", default)]
-    pub no_fog: bool,
-
-    /// Ignore z filtering
-    #[serde(rename = "$ignorez", default)]
-    pub ignore_z: bool,
+    #[serde(rename = "$envmaptint", default = "default_scale3")]
+    pub env_map_tint: Vec3,
 }

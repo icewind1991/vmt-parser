@@ -1,0 +1,9 @@
+---
+source: tests/parse.rs
+expression: result
+---
+subrect(SubRectMaterial(
+  r#$material: "decals/decals_mod2x",
+  r#$pos: Vec2((64.0, 0.0)),
+  r#$size: Vec2((64.0, 64.0)),
+))

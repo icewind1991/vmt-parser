@@ -3,7 +3,7 @@ source: tests/parse.rs
 expression: result
 ---
 vertexlitgeneric(VertexLitGenericMaterial(
-  r#$basetexture: "models/props_trainyard/handrail128_skin2",
+  r#$basetexture: Some("models/props_trainyard/handrail128_skin2"),
   r#$detail: None,
   r#$decaltexture: None,
   r#$color2: Vec3((1.0, 1.0, 1.0)),

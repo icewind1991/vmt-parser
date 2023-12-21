@@ -5,8 +5,12 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UnlitTwoTextureMaterial {
     /// The first texture in the blend.
-    #[serde(rename = "$basetexture", deserialize_with = "deserialize_path")]
-    pub base_texture: String,
+    #[serde(
+        rename = "$basetexture",
+        default,
+        deserialize_with = "deserialize_path"
+    )]
+    pub base_texture: Option<String>,
     /// The second texture to blend to.
     #[serde(rename = "$texture2", deserialize_with = "deserialize_path")]
     pub texture2: String,

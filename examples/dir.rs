@@ -16,7 +16,7 @@ fn main() -> Result<()> {
         .filter(|e| e.file_name().to_str().unwrap_or_default().ends_with(".vmt"))
     {
         if let Err(e) = try_parse(entry.path()) {
-            err.push(e);
+            err.push((entry.path().to_path_buf(), e));
             let e = try_parse(entry.path()).unwrap_err();
             println!("{:?}", e);
         } else {
@@ -27,8 +27,8 @@ fn main() -> Result<()> {
 
     println!("successfully parsed {success} files");
     println!("found errors in {} files", err.len());
-    for e in err {
-        println!("{:?}", e);
+    for (path, e) in err {
+        println!("{}: {e:?}", path.display());
     }
 
     Ok(())

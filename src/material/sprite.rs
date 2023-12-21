@@ -1,5 +1,5 @@
 use super::deserialize_path;
-use crate::{default_scale, default_scale3, Vec3};
+use crate::{default_scale, default_scale3, Vec2, Vec3};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -14,7 +14,7 @@ pub struct SpriteMaterial {
     #[serde(rename = "$spriteorientation", default)]
     pub sprite_orientation: SpriteOrientation,
     #[serde(rename = "$spriteorigin", default)]
-    pub sprite_origin: Vec3,
+    pub sprite_origin: Vec2,
 
     /// Independently scales the red, green and blue channels of an albedo.
     #[serde(rename = "$color", default = "default_scale3")]

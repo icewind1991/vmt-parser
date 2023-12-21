@@ -5,8 +5,12 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UnlitGenericMaterial {
     /// Defines an albedo texture.
-    #[serde(rename = "$basetexture", deserialize_with = "deserialize_path")]
-    pub base_texture: String,
+    #[serde(
+        rename = "$basetexture",
+        default,
+        deserialize_with = "deserialize_path"
+    )]
+    pub base_texture: Option<String>,
     /// Links the surface to a set of physical properties.
     #[serde(rename = "$surfaceprop", default)]
     pub surface_prop: Option<String>,

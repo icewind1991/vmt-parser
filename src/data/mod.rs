@@ -1,12 +1,28 @@
 pub mod texture_transform;
 
-use serde::{Deserialize, Serialize};
+use serde::de::Error;
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_repr::{Deserialize_repr, Serialize_repr};
+use std::borrow::Cow;
 pub use texture_transform::TextureTransform;
 
 #[derive(Debug, Serialize, Deserialize, Copy, Clone, Default)]
 #[serde(from = "Vec2OrSingle<f32>")]
 pub struct Vec2(pub [f32; 2]);
+
+pub(crate) fn deserialize_bare_vec2<'de, D: Deserializer<'de>>(
+    deserializer: D,
+) -> Result<Vec2, D::Error> {
+    let str = Cow::<str>::deserialize(deserializer)?;
+    let (x, y) = str
+        .trim()
+        .split_once(' ')
+        .ok_or_else(|| D::Error::custom("doesn't look like a vec2"))?;
+    let x = x.trim().parse().map_err(D::Error::custom)?;
+    let y = y.trim().parse().map_err(D::Error::custom)?;
+
+    Ok(Vec2([x, y]))
+}
 
 impl From<Vec2OrSingle<f32>> for Vec2 {
     fn from(value: Vec2OrSingle<f32>) -> Self {

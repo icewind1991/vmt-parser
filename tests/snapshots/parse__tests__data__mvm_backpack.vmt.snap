@@ -3,7 +3,7 @@ source: tests/parse.rs
 expression: result
 ---
 unlitgeneric(UnlitGenericMaterial(
-  r#$basetexture: "vgui/pve/mvm_backpack",
+  r#$basetexture: Some("vgui/pve/mvm_backpack"),
   r#$surfaceprop: None,
   r#$model: false,
   r#$color: Vec3((1.0, 1.0, 1.0)),

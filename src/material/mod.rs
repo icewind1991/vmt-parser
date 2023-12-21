@@ -1,16 +1,30 @@
+mod cable;
 mod eyerefract;
 mod lightmappedgeneric;
+mod modulate;
+mod refract;
+mod replacements;
+mod sky;
 mod sprite;
+mod spritecard;
+mod subrect;
 mod unlitgeneric;
 mod unlittwotexture;
 mod vertexlitgeneric;
 mod water;
 mod worldvertextransition;
 
+pub use cable::CableMaterial;
 pub use eyerefract::EyeRefractMaterial;
 pub use lightmappedgeneric::LightMappedGenericMaterial;
+pub use modulate::ModulateMaterial;
+pub use refract::RefractMaterial;
+pub use replacements::{ReplacementPattern, ReplacementTemplate, ReplacementsMaterial};
 use serde::{Deserialize, Deserializer, Serialize};
+pub use sky::SkyMaterial;
 pub use sprite::{SpriteMaterial, SpriteOrientation};
+pub use spritecard::SpriteCardMaterial;
+pub use subrect::SubRectMaterial;
 pub use unlitgeneric::UnlitGenericMaterial;
 pub use unlittwotexture::UnlitTwoTextureMaterial;
 use vdf_reader::entry::{Entry, Table};
@@ -22,24 +36,26 @@ pub use worldvertextransition::WorldVertexTransitionMaterial;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[non_exhaustive]
+#[serde(rename_all = "lowercase")]
 pub enum Material {
-    #[serde(rename = "lightmappedgeneric")]
     LightMappedGeneric(LightMappedGenericMaterial),
-    #[serde(rename = "vertexlitgeneric")]
     VertexLitGeneric(VertexLitGenericMaterial),
-    #[serde(rename = "unlitgeneric")]
+    #[serde(rename = "vertexlitgeneric_dx6")]
+    VertexLitGenericDx6(VertexLitGenericMaterial),
     UnlitGeneric(UnlitGenericMaterial),
-    #[serde(rename = "unlittwotexture")]
     UnlitTwoTexture(UnlitTwoTextureMaterial),
-    #[serde(rename = "water")]
     Water(WaterMaterial),
-    #[serde(rename = "worldvertextransition")]
     WorldVertexTransition(WorldVertexTransitionMaterial),
-    #[serde(rename = "eyerefract")]
     EyeRefract(EyeRefractMaterial),
-    #[serde(rename = "sprite")]
+    SubRect(SubRectMaterial),
     Sprite(SpriteMaterial),
-    #[serde(rename = "patch")]
+    SpriteCard(SpriteCardMaterial),
+    Cable(CableMaterial),
+    Refract(RefractMaterial),
+    Modulate(ModulateMaterial),
+    DecalModulate(ModulateMaterial),
+    Sky(SkyMaterial),
+    Replacements(ReplacementsMaterial),
     Patch(PatchMaterial),
 }
 
@@ -60,6 +76,7 @@ impl Material {
         match self {
             Material::LightMappedGeneric(mat) => mat.translucent,
             Material::VertexLitGeneric(mat) => mat.translucent,
+            Material::VertexLitGenericDx6(mat) => mat.translucent,
             Material::UnlitGeneric(mat) => mat.translucent,
             Material::UnlitTwoTexture(mat) => mat.translucent,
             Material::WorldVertexTransition(mat) => mat.translucent,
@@ -73,6 +90,7 @@ impl Material {
         match self {
             Material::LightMappedGeneric(mat) => mat.no_cull,
             Material::VertexLitGeneric(mat) => mat.no_cull,
+            Material::VertexLitGenericDx6(mat) => mat.no_cull,
             Material::UnlitGeneric(mat) => mat.no_cull,
             Material::UnlitTwoTexture(mat) => mat.no_cull,
             Material::WorldVertexTransition(mat) => mat.no_cull,
@@ -85,6 +103,9 @@ impl Material {
         match self {
             Material::LightMappedGeneric(mat) => mat.alpha_test.then_some(mat.alpha_test_reference),
             Material::VertexLitGeneric(mat) => mat.alpha_test.then_some(mat.alpha_test_reference),
+            Material::VertexLitGenericDx6(mat) => {
+                mat.alpha_test.then_some(mat.alpha_test_reference)
+            }
             Material::UnlitGeneric(mat) => mat.alpha_test.then_some(mat.alpha_test_reference),
             Material::UnlitTwoTexture(mat) => mat.alpha_test.then_some(mat.alpha_test_reference),
             Material::WorldVertexTransition(mat) => {
@@ -99,9 +120,10 @@ impl Material {
     pub fn base_texture(&self) -> Option<&str> {
         match self {
             Material::LightMappedGeneric(mat) => Some(&mat.base_texture),
-            Material::VertexLitGeneric(mat) => Some(&mat.base_texture),
-            Material::UnlitGeneric(mat) => Some(&mat.base_texture),
-            Material::UnlitTwoTexture(mat) => Some(&mat.base_texture),
+            Material::VertexLitGeneric(mat) => mat.base_texture.as_deref(),
+            Material::VertexLitGenericDx6(mat) => mat.base_texture.as_deref(),
+            Material::UnlitGeneric(mat) => mat.base_texture.as_deref(),
+            Material::UnlitTwoTexture(mat) => mat.base_texture.as_deref(),
             Material::WorldVertexTransition(mat) => Some(&mat.base_texture),
             Material::Sprite(mat) => Some(&mat.base_texture),
             Material::Water(mat) => mat.base_texture.as_deref(),
@@ -114,6 +136,7 @@ impl Material {
         match self {
             Material::LightMappedGeneric(mat) => mat.bump_map.as_deref(),
             Material::VertexLitGeneric(mat) => mat.bump_map.as_deref(),
+            Material::VertexLitGenericDx6(mat) => mat.bump_map.as_deref(),
             Material::UnlitGeneric(mat) => mat.bump_map.as_deref(),
             Material::UnlitTwoTexture(mat) => mat.bump_map.as_deref(),
             Material::WorldVertexTransition(mat) => mat.bump_map.as_deref(),
@@ -136,6 +159,7 @@ impl Material {
         match self {
             Material::LightMappedGeneric(mat) => mat.alpha,
             Material::VertexLitGeneric(mat) => mat.alpha,
+            Material::VertexLitGenericDx6(mat) => mat.alpha,
             Material::UnlitGeneric(mat) => mat.alpha,
             Material::UnlitTwoTexture(mat) => mat.alpha,
             Material::Sprite(mat) => mat.alpha,
@@ -148,6 +172,7 @@ impl Material {
         match self {
             Material::LightMappedGeneric(mat) => mat.ignore_z,
             Material::VertexLitGeneric(mat) => mat.ignore_z,
+            Material::VertexLitGenericDx6(mat) => mat.ignore_z,
             Material::UnlitGeneric(mat) => mat.ignore_z,
             Material::UnlitTwoTexture(mat) => mat.ignore_z,
             Material::WorldVertexTransition(mat) => mat.ignore_z,
