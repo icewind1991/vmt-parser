@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use serde_repr::{Deserialize_repr, Serialize_repr};
 pub use texture_transform::TextureTransform;
 
-#[derive(Debug, Serialize, Deserialize, Copy, Clone)]
+#[derive(Debug, Serialize, Deserialize, Copy, Clone, Default)]
 #[serde(from = "Vec2OrSingle<f32>")]
 pub struct Vec2(pub [f32; 2]);
 
@@ -17,7 +17,7 @@ impl From<Vec2OrSingle<f32>> for Vec2 {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, Copy, Clone)]
+#[derive(Debug, Serialize, Deserialize, Copy, Clone, Default)]
 #[serde(from = "Vec3OrSingle<f32>")]
 pub struct Vec3(pub [f32; 3]);
 

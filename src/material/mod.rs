@@ -1,5 +1,6 @@
 mod eyerefract;
 mod lightmappedgeneric;
+mod sprite;
 mod unlitgeneric;
 mod unlittwotexture;
 mod vertexlitgeneric;
@@ -9,6 +10,7 @@ mod worldvertextransition;
 pub use eyerefract::EyeRefractMaterial;
 pub use lightmappedgeneric::LightMappedGenericMaterial;
 use serde::{Deserialize, Deserializer, Serialize};
+pub use sprite::{SpriteMaterial, SpriteOrientation};
 pub use unlitgeneric::UnlitGenericMaterial;
 pub use unlittwotexture::UnlitTwoTextureMaterial;
 use vdf_reader::entry::{Entry, Table};
@@ -35,6 +37,8 @@ pub enum Material {
     WorldVertexTransition(WorldVertexTransitionMaterial),
     #[serde(rename = "eyerefract")]
     EyeRefract(EyeRefractMaterial),
+    #[serde(rename = "sprite")]
+    Sprite(SpriteMaterial),
     #[serde(rename = "patch")]
     Patch(PatchMaterial),
 }
@@ -59,6 +63,7 @@ impl Material {
             Material::UnlitGeneric(mat) => mat.translucent,
             Material::UnlitTwoTexture(mat) => mat.translucent,
             Material::WorldVertexTransition(mat) => mat.translucent,
+            Material::Sprite(mat) => mat.translucent,
             Material::Water(_) => true,
             _ => false,
         }
@@ -85,6 +90,7 @@ impl Material {
             Material::WorldVertexTransition(mat) => {
                 mat.alpha_test.then_some(mat.alpha_test_reference)
             }
+            Material::Sprite(mat) => mat.alpha_test.then_some(mat.alpha_test_reference),
             Material::Water(_) => None,
             _ => None,
         }
@@ -97,6 +103,7 @@ impl Material {
             Material::UnlitGeneric(mat) => &mat.base_texture,
             Material::UnlitTwoTexture(mat) => &mat.base_texture,
             Material::WorldVertexTransition(mat) => &mat.base_texture,
+            Material::Sprite(mat) => &mat.base_texture,
             Material::Water(mat) => mat.base_texture.as_deref().unwrap_or_default(),
             Material::EyeRefract(mat) => &mat.iris,
             _ => "",
@@ -131,6 +138,7 @@ impl Material {
             Material::VertexLitGeneric(mat) => mat.alpha,
             Material::UnlitGeneric(mat) => mat.alpha,
             Material::UnlitTwoTexture(mat) => mat.alpha,
+            Material::Sprite(mat) => mat.alpha,
             Material::WorldVertexTransition(mat) => mat.alpha,
             _ => 1.0,
         }
