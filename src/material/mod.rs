@@ -19,6 +19,7 @@ pub use water::WaterMaterial;
 pub use worldvertextransition::WorldVertexTransitionMaterial;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[non_exhaustive]
 pub enum Material {
     #[serde(rename = "lightmappedgeneric")]
     LightMappedGeneric(LightMappedGenericMaterial),
