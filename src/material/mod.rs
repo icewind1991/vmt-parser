@@ -96,17 +96,17 @@ impl Material {
         }
     }
 
-    pub fn base_texture(&self) -> &str {
+    pub fn base_texture(&self) -> Option<&str> {
         match self {
-            Material::LightMappedGeneric(mat) => &mat.base_texture,
-            Material::VertexLitGeneric(mat) => &mat.base_texture,
-            Material::UnlitGeneric(mat) => &mat.base_texture,
-            Material::UnlitTwoTexture(mat) => &mat.base_texture,
-            Material::WorldVertexTransition(mat) => &mat.base_texture,
-            Material::Sprite(mat) => &mat.base_texture,
-            Material::Water(mat) => mat.base_texture.as_deref().unwrap_or_default(),
-            Material::EyeRefract(mat) => &mat.iris,
-            _ => "",
+            Material::LightMappedGeneric(mat) => Some(&mat.base_texture),
+            Material::VertexLitGeneric(mat) => Some(&mat.base_texture),
+            Material::UnlitGeneric(mat) => Some(&mat.base_texture),
+            Material::UnlitTwoTexture(mat) => Some(&mat.base_texture),
+            Material::WorldVertexTransition(mat) => Some(&mat.base_texture),
+            Material::Sprite(mat) => Some(&mat.base_texture),
+            Material::Water(mat) => mat.base_texture.as_deref(),
+            Material::EyeRefract(mat) => Some(&mat.iris),
+            _ => None,
         }
     }
 
