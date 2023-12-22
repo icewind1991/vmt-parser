@@ -14,6 +14,7 @@ mod vertexlitgeneric;
 mod water;
 mod worldvertextransition;
 
+use crate::TextureTransform;
 pub use cable::CableMaterial;
 pub use eyerefract::EyeRefractMaterial;
 pub use lightmappedgeneric::LightMappedGenericMaterial;
@@ -128,6 +129,17 @@ impl Material {
             Material::Sprite(mat) => Some(&mat.base_texture),
             Material::Water(mat) => mat.base_texture.as_deref(),
             Material::EyeRefract(mat) => Some(&mat.iris),
+            _ => None,
+        }
+    }
+
+    pub fn base_texture_transform(&self) -> Option<&TextureTransform> {
+        match self {
+            Material::LightMappedGeneric(mat) => Some(&mat.base_texture_transform),
+            Material::VertexLitGeneric(mat) => Some(&mat.base_texture_transform),
+            Material::VertexLitGenericDx6(mat) => Some(&mat.base_texture_transform),
+            Material::UnlitTwoTexture(mat) => Some(&mat.base_texture_transform),
+            Material::WorldVertexTransition(mat) => Some(&mat.base_texture_transform),
             _ => None,
         }
     }
