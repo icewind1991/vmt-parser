@@ -50,7 +50,7 @@ pub struct WaterMaterial {
     #[serde(rename = "$fogenable", default)]
     pub fog_enable: bool,
     /// Color of the water’s volumetric fog. Generally this value should match the color used in the bottom material.
-    #[serde(rename = "$fogenable", default = "default_scale3")]
+    #[serde(rename = "$fogcolor", default = "default_scale3")]
     pub fog_color: Vec3,
     /// Distance in units/inches from the eye at which water fog starts.
     #[serde(rename = "$fogstart", default)]

@@ -12,7 +12,7 @@ worldvertextransition(WorldVertexTransitionMaterial(
   r#$basetexturetransform: "center 0.5 0.5 scale 1 1 rotate 0 translate 0 0",
   r#$color: Vec3((1.0, 1.0, 1.0)),
   r#$decalscale: 1.0,
-  r#$decalscale: Vec2((4.0, 4.0)),
+  r#$detailscale: Vec2((4.0, 4.0)),
   r#$detailblendfactor: 1.0,
   r#$detailblendmode: 1,
   r#$modelmaterial: None,

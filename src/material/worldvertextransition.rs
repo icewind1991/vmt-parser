@@ -38,7 +38,7 @@ pub struct WorldVertexTransitionMaterial {
     /// the number of units that each texel covers
     #[serde(rename = "$decalscale", default = "default_scale")]
     pub decal_scale: f32,
-    #[serde(rename = "$decalscale", default = "default_detail_scale")]
+    #[serde(rename = "$detailscale", default = "default_detail_scale")]
     /// Fits the detail texture onto the material the given number of times
     pub detail_scale: Vec2,
     /// Controls the amount that the detail texture affects the base texture. The precise use of this depends on the blend factor; in most cases it acts similarly to $alpha. A value of 0 usually makes the detail texture have no effect, whilst a value of 1 applies the full effect.
