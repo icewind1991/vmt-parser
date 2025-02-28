@@ -13,6 +13,5 @@
   outputs = {mill-scale, ...}:
     mill-scale ./. {
       extraPaths = [./tests/data ./tests/snapshots];
-      tools = pkgs: with pkgs; [cargo-insta];
     };
 }
