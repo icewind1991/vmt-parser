@@ -601,15 +601,15 @@ checksum = "7dd6e30e90baa6f72411720665d41d89b9a3d039dc45b8faea1ddd07f617f6af"
 
 [[package]]
 name = "vdf-reader"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "543945fdc3d51b20e3e0f5fd845ddeca4a270e56522035cf152105bc144ffd65"
+checksum = "4c92e6cbd97e3aefd917c537080b085a4cb926461dddf98daab9a370972ffdfe"
 dependencies = [
  "logos",
  "miette",
  "parse-display",
  "serde",
- "thiserror 1.0.69",
+ "thiserror 2.0.11",
 ]
 
 [[package]]

@@ -10,7 +10,7 @@ rust-version = "1.70.0"
 [dependencies]
 thiserror = "2.0.11"
 miette = "7.5.0"
-vdf-reader = "0.2"
+vdf-reader = "0.3.0"
 serde = { version = "1.0.217", features = ["derive"] }
 serde_repr = "0.1.19"
 
